@@ -29,10 +29,6 @@
   name = "github.com/hashicorp/terraform"
   version = "0.11.13"
 
-[[constraint]]
-	  name = "github.com/terraform-providers/terraform-provider-template"
-  version = "1.0.0"
-
 [prune]
   go-tests = true
   unused-packages = true

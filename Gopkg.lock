@@ -310,7 +310,7 @@
   version = "v1.0.0"
 
 [[projects]]
-  digest = "1:b854649017eb6f0e7e4164ac333cfbe84fa150fb98869d57398829b72be0b8ef"
+  digest = "1:b82fe95e11239fa9f968ce221c988db4a16a58c337a7cdf26ab3208023484e4c"
   name = "github.com/hashicorp/terraform"
   packages = [
     "config",
@@ -323,7 +323,6 @@
     "helper/hashcode",
     "helper/hilmapstructure",
     "helper/logging",
-    "helper/pathorcontents",
     "helper/resource",
     "helper/schema",
     "helper/structure",
@@ -461,14 +460,6 @@
   pruneopts = "UT"
   revision = "3ef9b31a6a0613ae832e7ecf208374027c3b2343"
   version = "v1.2.1"
-
-[[projects]]
-  digest = "1:ce6f6bfbd0771c1a706842d45665723ee277a3b98b274b1dd3abee46c5160c2d"
-  name = "github.com/terraform-providers/terraform-provider-template"
-  packages = ["template"]
-  pruneopts = "UT"
-  revision = "d8fb0821ebc320ff3750c982f14eca1e7249660d"
-  version = "v1.0.0"
 
 [[projects]]
   digest = "1:2643d81498e38e44bdcf480be199cac55f29e97403b0342d962824bfe9960722"
@@ -708,7 +699,6 @@
     "github.com/hashicorp/terraform/helper/validation",
     "github.com/hashicorp/terraform/plugin",
     "github.com/hashicorp/terraform/terraform",
-    "github.com/terraform-providers/terraform-provider-template/template",
   ]
   solver-name = "gps-cdcl"
   solver-version = 1
