@@ -2,10 +2,10 @@ package main
 
 import (
 	"github.com/hashicorp/terraform/plugin"
-	"github.com/terraform-providers/terraform-provider-template/template"
+	"github.com/intelematics/terraform-provider-cloudconformity/cloud-conformity"
 )
 
 func main() {
 	plugin.Serve(&plugin.ServeOpts{
-		ProviderFunc: template.Provider})
+		ProviderFunc: cloud_conformity.Provider})
 }
