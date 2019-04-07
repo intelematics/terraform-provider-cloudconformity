@@ -1,10 +1,9 @@
 package sdk
 
 import (
+	"bytes"
 	"encoding/json"
-	"errors"
 	"fmt"
-	"io/ioutil"
 	"net/http"
 )
 
@@ -18,58 +17,24 @@ type Account struct {
 	Id   string
 }
 
-type accountData struct {
-	Id         string            `json:"id"`
-	Attributes accountAttributes `json:"attributes"`
+type createAccountAccessKeys struct {
+	RoleArn string `json:"roleArn"`
+	ExternalId string `json:"externalId"`
 }
 
-type accountAttributes struct {
+type createAccountAccess struct {
+	Keys createAccountAccessKeys `json:"keys"`
+}
+
+type createAccountAttributes struct {
 	Name string `json:"name"`
+	Environment string `json:"environment"`
+	Access createAccountAccess `json:"access"`
 }
 
-func (client Client) GetAccount(id string) (*Account, error) {
-
-	req, err := http.NewRequest("GET", client.getUrl(fmt.Sprintf("accounts/%s", id)), nil)
-	if err != nil {
-		return nil, err
-	}
-	client.addHeaders(req)
-
-	resp, err := http.DefaultClient.Do(req)
-	if err != nil {
-		return nil, err
-	}
-
-	if resp.StatusCode > 299 || resp.StatusCode < 200 {
-		return nil, errors.New(http.StatusText(resp.StatusCode))
-	}
-	// https://old.reddit.com/r/golang/comments/3735so/do_we_have_to_check_for_errors_when_we_call_close/
-	defer func() {
-		if cerr := resp.Body.Close(); cerr != nil && err == nil {
-			err = cerr
-		}
-	}()
-
-	body, err := ioutil.ReadAll(resp.Body)
-	if err != nil {
-		return nil, err
-	}
-
-	getAccounts := struct {
-		Data accountData `json:"data"`
-	}{}
-
-	err = json.Unmarshal(body, &getAccounts)
-	if err != nil {
-		return nil, err
-	}
-
-	account := Account{
-		Name: getAccounts.Data.Attributes.Name,
-		Id:   getAccounts.Data.Id,
-	}
-
-	return &account, err
+type createAccountData struct {
+	Type string `json:"type"`
+	Attributres createAccountAttributes `json:"attributes"`
 }
 
 func (client Client) getUrl(path string) string {
@@ -81,6 +46,42 @@ func (client Client) addHeaders(request *http.Request) {
 		"Authorization": {fmt.Sprintf("ApiKey %s", client.apiKey)},
 		"Content-Type":  {"application/vnd.api+json"},
 	}
+}
+
+func (client Client) CreateAccount(request CreateAccountRequest) (*Account, error) {
+	createAccountRequest := struct {
+		Data createAccountData `json:"data"`
+	}{}
+	createAccountRequest.Data.Type = "account"
+	createAccountRequest.Data.Attributres.Access.Keys.ExternalId = request.ExternalId
+	createAccountRequest.Data.Attributres.Access.Keys.RoleArn = request.Role
+	createAccountRequest.Data.Attributres.Environment = request.Environment
+	createAccountRequest.Data.Attributres.Name = request.Name
+
+	requestBody, err := json.Marshal(&createAccountRequest)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest("POST", client.getUrl("accounts"), bytes.NewReader(requestBody))
+	if err != nil {
+		return nil, err
+	}
+	client.addHeaders(req)
+
+	resp, err := http.DefaultClient.Do(req)
+	if err != nil {
+		return nil, err
+	}
+
+	// https://old.reddit.com/r/golang/comments/3735so/do_we_have_to_check_for_errors_when_we_call_close/
+	defer func() {
+		if cerr := resp.Body.Close(); cerr != nil && err == nil {
+			err = cerr
+		}
+	}()
+
+	return nil, nil
 }
 
 func NewClient(apiKey string, region string) *Client {
