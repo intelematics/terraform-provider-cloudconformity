@@ -3,6 +3,7 @@ package cloud_conformity
 import (
 	"github.com/hashicorp/terraform/helper/schema"
 	"github.com/hashicorp/terraform/terraform"
+	"github.com/terraform-providers/terraform-provider-aws/aws"
 	"os"
 	"testing"
 )
@@ -10,9 +11,15 @@ import (
 var testAccProvider *schema.Provider
 
 var testAccProviders map[string]terraform.ResourceProvider
+var testAccProvidersWithAws map[string]terraform.ResourceProvider
 
 func init() {
 	testAccProvider = Provider().(*schema.Provider)
+	testAccProvidersWithAws = map[string]terraform.ResourceProvider{
+		"cloudconformity": testAccProvider,
+		"aws": aws.Provider(),
+	}
+
 	testAccProviders = map[string]terraform.ResourceProvider{
 		"cloudconformity": testAccProvider,
 	}
