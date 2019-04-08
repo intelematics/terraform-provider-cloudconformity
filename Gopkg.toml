@@ -27,8 +27,16 @@
 
 [[constraint]]
   name = "github.com/hashicorp/terraform"
-  version = "0.11.13"
+  version = "=v0.11.12"
 
 [prune]
   go-tests = true
   unused-packages = true
+
+[[constraint]]
+  name = "github.com/terraform-providers/terraform-provider-aws"
+  version = "=v2.4.0"
+
+[[override]]
+  name = "github.com/kubernetes-sigs/aws-iam-authenticator"
+  version = "0.4.0-alpha.1"

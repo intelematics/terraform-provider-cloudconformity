@@ -50,10 +50,11 @@
   version = "v1.0.0"
 
 [[projects]]
-  digest = "1:ced9b678d6fdca06376ad5a1203bf7ab164a500268714fedaebdb3b9e90e6530"
+  digest = "1:e95e865f28ef0760ef6cef8f6f478b97c4b29394b7f5e5b59acb20bda1ae6c05"
   name = "github.com/aws/aws-sdk-go"
   packages = [
     "aws",
+    "aws/arn",
     "aws/awserr",
     "aws/awsutil",
     "aws/client",
@@ -64,6 +65,7 @@
     "aws/credentials/endpointcreds",
     "aws/credentials/processcreds",
     "aws/credentials/stscreds",
+    "aws/crr",
     "aws/csm",
     "aws/defaults",
     "aws/ec2metadata",
@@ -78,19 +80,143 @@
     "internal/sdkuri",
     "internal/shareddefaults",
     "private/protocol",
+    "private/protocol/ec2query",
     "private/protocol/eventstream",
     "private/protocol/eventstream/eventstreamapi",
+    "private/protocol/json/jsonutil",
+    "private/protocol/jsonrpc",
     "private/protocol/query",
     "private/protocol/query/queryutil",
     "private/protocol/rest",
+    "private/protocol/restjson",
     "private/protocol/restxml",
     "private/protocol/xml/xmlutil",
+    "private/signer/v2",
+    "service/acm",
+    "service/acmpca",
+    "service/apigateway",
+    "service/apigatewayv2",
+    "service/applicationautoscaling",
+    "service/appmesh",
+    "service/appsync",
+    "service/athena",
+    "service/autoscaling",
+    "service/backup",
+    "service/batch",
+    "service/budgets",
+    "service/cloud9",
+    "service/cloudformation",
+    "service/cloudfront",
+    "service/cloudhsmv2",
+    "service/cloudsearch",
+    "service/cloudtrail",
+    "service/cloudwatch",
+    "service/cloudwatchevents",
+    "service/cloudwatchlogs",
+    "service/codebuild",
+    "service/codecommit",
+    "service/codedeploy",
+    "service/codepipeline",
+    "service/cognitoidentity",
+    "service/cognitoidentityprovider",
+    "service/configservice",
+    "service/costandusagereportservice",
+    "service/databasemigrationservice",
+    "service/datapipeline",
+    "service/datasync",
+    "service/dax",
+    "service/devicefarm",
+    "service/directconnect",
+    "service/directoryservice",
+    "service/dlm",
+    "service/docdb",
+    "service/dynamodb",
+    "service/ec2",
+    "service/ecr",
+    "service/ecs",
+    "service/efs",
+    "service/eks",
+    "service/elasticache",
+    "service/elasticbeanstalk",
+    "service/elasticsearchservice",
+    "service/elastictranscoder",
+    "service/elb",
+    "service/elbv2",
+    "service/emr",
+    "service/firehose",
+    "service/fms",
+    "service/fsx",
+    "service/gamelift",
+    "service/glacier",
+    "service/globalaccelerator",
+    "service/glue",
+    "service/guardduty",
+    "service/iam",
+    "service/inspector",
+    "service/iot",
+    "service/kafka",
+    "service/kinesis",
+    "service/kinesisanalytics",
+    "service/kinesisanalyticsv2",
+    "service/kms",
+    "service/lambda",
+    "service/lexmodelbuildingservice",
+    "service/licensemanager",
+    "service/lightsail",
+    "service/macie",
+    "service/mediaconnect",
+    "service/mediaconvert",
+    "service/medialive",
+    "service/mediapackage",
+    "service/mediastore",
+    "service/mediastoredata",
+    "service/mq",
+    "service/neptune",
+    "service/opsworks",
+    "service/organizations",
+    "service/pinpoint",
+    "service/pricing",
+    "service/ram",
+    "service/rds",
+    "service/redshift",
+    "service/resourcegroups",
+    "service/route53",
+    "service/route53resolver",
     "service/s3",
+    "service/s3control",
+    "service/sagemaker",
+    "service/secretsmanager",
+    "service/securityhub",
+    "service/serverlessapplicationrepository",
+    "service/servicecatalog",
+    "service/servicediscovery",
+    "service/ses",
+    "service/sfn",
+    "service/shield",
+    "service/simpledb",
+    "service/sns",
+    "service/sqs",
+    "service/ssm",
+    "service/storagegateway",
     "service/sts",
+    "service/swf",
+    "service/transfer",
+    "service/waf",
+    "service/wafregional",
+    "service/worklink",
+    "service/workspaces",
   ]
   pruneopts = "UT"
   revision = "56c1def75689cceec1fa6f14c2eedb4b798827f9"
   version = "v1.19.11"
+
+[[projects]]
+  digest = "1:bd8bc15ce3a9929e2777651cbc271fca5561c0d5f42187edb4720e638d24662d"
+  name = "github.com/beevik/etree"
+  packages = ["."]
+  pruneopts = "UT"
+  revision = "8aee6516be3b1163bb6450c35c50e4969e3a3aa8"
+  version = "v1.1.0"
 
 [[projects]]
   branch = "master"
@@ -133,6 +259,17 @@
   version = "v1.7.0"
 
 [[projects]]
+  digest = "1:4d02824a56d268f74a6b6fdd944b20b58a77c3d70e81008b3ee0c4f1a6777340"
+  name = "github.com/gogo/protobuf"
+  packages = [
+    "proto",
+    "sortkeys",
+  ]
+  pruneopts = "UT"
+  revision = "ba06b47c162d49f2af050fb4c75bcbc86a159d5c"
+  version = "v1.2.1"
+
+[[projects]]
   digest = "1:64c2b533ffd17023738c534548ab2455d7f519bc15ed4225145425ed2222448b"
   name = "github.com/golang/protobuf"
   packages = [
@@ -148,6 +285,14 @@
   version = "v1.3.1"
 
 [[projects]]
+  digest = "1:e4f5819333ac698d294fe04dbf640f84719658d5c7ce195b10060cc37292ce79"
+  name = "github.com/golang/snappy"
+  packages = ["."]
+  pruneopts = "UT"
+  revision = "2a8bb927dd31d8daada140a5d09578521ce5c36a"
+  version = "v0.0.1"
+
+[[projects]]
   digest = "1:2e3c336fc7fde5c984d2841455a658a6d626450b1754a854b3b32e7a8f49a07a"
   name = "github.com/google/go-cmp"
   packages = [
@@ -161,12 +306,28 @@
   version = "v0.2.0"
 
 [[projects]]
+  branch = "master"
+  digest = "1:3ee90c0d94da31b442dde97c99635aaafec68d0b8a3c12ee2075c6bdabeec6bb"
+  name = "github.com/google/gofuzz"
+  packages = ["."]
+  pruneopts = "UT"
+  revision = "24818f796faf91cd76ec7bddd72458fbced7a6c1"
+
+[[projects]]
   digest = "1:f1f70abea1ab125d48396343b4c053f8fecfbdb943037bf3d29dc80c90fe60b3"
   name = "github.com/googleapis/gax-go"
   packages = ["v2"]
   pruneopts = "UT"
   revision = "beaecbbdd8af86aa3acf14180d53828ce69400b2"
   version = "v2.0.4"
+
+[[projects]]
+  digest = "1:e527ab04bbfeae32d28f12bf0098b362f6849fc9a28d86eec8af5230a4af7546"
+  name = "github.com/hashicorp/aws-sdk-go-base"
+  packages = ["."]
+  pruneopts = "UT"
+  revision = "51281492b48141180c0d50b814d73b7d438872db"
+  version = "v0.3.0"
 
 [[projects]]
   digest = "1:0ade334594e69404d80d9d323445d2297ff8161637f9b2d347cc6973d2d6f05b"
@@ -310,7 +471,7 @@
   version = "v1.0.0"
 
 [[projects]]
-  digest = "1:b82fe95e11239fa9f968ce221c988db4a16a58c337a7cdf26ab3208023484e4c"
+  digest = "1:8352479ad8e9b65994d617805ff428e65960a0461261f8983a8dbc6abff596e5"
   name = "github.com/hashicorp/terraform"
   packages = [
     "config",
@@ -320,9 +481,12 @@
     "dag",
     "flatmap",
     "helper/config",
+    "helper/customdiff",
+    "helper/encryption",
     "helper/hashcode",
     "helper/hilmapstructure",
     "helper/logging",
+    "helper/mutexkv",
     "helper/resource",
     "helper/schema",
     "helper/structure",
@@ -342,8 +506,20 @@
     "version",
   ]
   pruneopts = "UT"
-  revision = "d48069534832fdb09919a5fe46500755540cbf0a"
-  version = "v0.11.13"
+  revision = "057286e5228559722bfc9bf6a03679650358c9d2"
+  version = "v0.11.12"
+
+[[projects]]
+  digest = "1:8328956f643f253ceb608531bbeea300ee254b269b57b1c1ccf7e19210a7bd5e"
+  name = "github.com/hashicorp/vault"
+  packages = [
+    "helper/compressutil",
+    "helper/jsonutil",
+    "helper/pgpkeys",
+  ]
+  pruneopts = "UT"
+  revision = "36aa8c8dd1936e10ebd7a4c1d412ae0e6f7900bd"
+  version = "v1.1.0"
 
 [[projects]]
   branch = "master"
@@ -354,11 +530,52 @@
   revision = "2f1d1f20f75d5404f53b9edf6b53ed5505508675"
 
 [[projects]]
+  digest = "1:468aef208d16cf01b4ab6e1c6f4b439b8b8534589b0875a80a964687dd73871c"
+  name = "github.com/jen20/awspolicyequivalence"
+  packages = ["."]
+  pruneopts = "UT"
+  revision = "9ebbf3c225b2b9da629263e13c3015a5de7965d1"
+  version = "v1.0.0"
+
+[[projects]]
   digest = "1:bb81097a5b62634f3e9fec1014657855610c82d19b9a40c17612e32651e35dca"
   name = "github.com/jmespath/go-jmespath"
   packages = ["."]
   pruneopts = "UT"
   revision = "c2b33e84"
+
+[[projects]]
+  branch = "master"
+  digest = "1:8647f03da310f91e13e56ebef1663ea7b757d55e220a8ca53666f7d8c7efaf41"
+  name = "github.com/keybase/go-crypto"
+  packages = [
+    "brainpool",
+    "cast5",
+    "curve25519",
+    "ed25519",
+    "ed25519/internal/edwards25519",
+    "openpgp",
+    "openpgp/armor",
+    "openpgp/ecdh",
+    "openpgp/elgamal",
+    "openpgp/errors",
+    "openpgp/packet",
+    "openpgp/s2k",
+    "rsa",
+  ]
+  pruneopts = "UT"
+  revision = "d65b6b94177fc86b352de754be0aa306de59a759"
+
+[[projects]]
+  digest = "1:92819c3dc15d822e470ba6ddddc4b3790a8bb902f65e273f7ad5a1b288e39a60"
+  name = "github.com/kubernetes-sigs/aws-iam-authenticator"
+  packages = [
+    "pkg/arn",
+    "pkg/token",
+  ]
+  pruneopts = "UT"
+  revision = "82544ec86140b7027a07890b09c2f03fca97228a"
+  version = "0.4.0-alpha.1"
 
 [[projects]]
   digest = "1:c658e84ad3916da105a761660dcaeb01e63416c8ec7bc62256a9b411a05fcd67"
@@ -449,6 +666,17 @@
   version = "v1.0.0"
 
 [[projects]]
+  digest = "1:d886a3c32c8c1a770d07e36340f061d3afc948d065ffc3c9a19b01b34d4f0b65"
+  name = "github.com/pierrec/lz4"
+  packages = [
+    ".",
+    "internal/xxh32",
+  ]
+  pruneopts = "UT"
+  revision = "315a67e90e415bcdaff33057da191569bf4d8479"
+  version = "v2.1.1"
+
+[[projects]]
   digest = "1:57e168c6dfcc02c1c53bdf1589afbef59694d819cac65bfd3a855de2256d4950"
   name = "github.com/posener/complete"
   packages = [
@@ -460,6 +688,14 @@
   pruneopts = "UT"
   revision = "3ef9b31a6a0613ae832e7ecf208374027c3b2343"
   version = "v1.2.1"
+
+[[projects]]
+  digest = "1:7afd0a5a79fad97db7430d0aa2fc5d38fa0aa5abae5835dc8c5df95be5428e5d"
+  name = "github.com/terraform-providers/terraform-provider-aws"
+  packages = ["aws"]
+  pruneopts = "UT"
+  revision = "832b2da3d1f694ab31011349ac2fe79b2041d6ec"
+  version = "v2.4.0"
 
 [[projects]]
   digest = "1:2643d81498e38e44bdcf480be199cac55f29e97403b0342d962824bfe9960722"
@@ -690,6 +926,71 @@
   revision = "3507fb8e1a5ad030303c106fef3a47c9fdad16ad"
   version = "v1.19.1"
 
+[[projects]]
+  digest = "1:2d1fbdc6777e5408cabeb02bf336305e724b925ff4546ded0fa8715a7267922a"
+  name = "gopkg.in/inf.v0"
+  packages = ["."]
+  pruneopts = "UT"
+  revision = "d2d2541c53f18d2a059457998ce2876cc8e67cbf"
+  version = "v0.9.1"
+
+[[projects]]
+  digest = "1:4d2e5a73dc1500038e504a8d78b986630e3626dc027bc030ba5c75da257cdb96"
+  name = "gopkg.in/yaml.v2"
+  packages = ["."]
+  pruneopts = "UT"
+  revision = "51d6538a90f86fe93ac480b35f37b2be17fef232"
+  version = "v2.2.2"
+
+[[projects]]
+  branch = "master"
+  digest = "1:0b4c7a715dcdf827b3e5b2ce6cf13d75927114e1f1edf99954735d9f8ee239bf"
+  name = "k8s.io/apimachinery"
+  packages = [
+    "pkg/api/resource",
+    "pkg/apis/meta/v1",
+    "pkg/conversion",
+    "pkg/conversion/queryparams",
+    "pkg/fields",
+    "pkg/labels",
+    "pkg/runtime",
+    "pkg/runtime/schema",
+    "pkg/selection",
+    "pkg/types",
+    "pkg/util/errors",
+    "pkg/util/intstr",
+    "pkg/util/json",
+    "pkg/util/naming",
+    "pkg/util/net",
+    "pkg/util/runtime",
+    "pkg/util/sets",
+    "pkg/util/validation",
+    "pkg/util/validation/field",
+    "pkg/watch",
+    "third_party/forked/golang/reflect",
+  ]
+  pruneopts = "UT"
+  revision = "8f13d758fb1aca714ee8a0a5c295b085f70cf0c0"
+
+[[projects]]
+  digest = "1:f2da4f6aa1bec50f8a47e2aab00601edd49a5e144dd87364555b7ae21233aee0"
+  name = "k8s.io/client-go"
+  packages = [
+    "pkg/apis/clientauthentication",
+    "pkg/apis/clientauthentication/v1alpha1",
+  ]
+  pruneopts = "UT"
+  revision = "6ee68ca5fd8355d024d02f9db0b3b667e8357a0f"
+  version = "v11.0.0"
+
+[[projects]]
+  digest = "1:72fd56341405f53c745377e0ebc4abeff87f1a048e0eea6568a20212650f5a82"
+  name = "k8s.io/klog"
+  packages = ["."]
+  pruneopts = "UT"
+  revision = "71442cd4037d612096940ceb0f3fec3f7fff66e0"
+  version = "v0.2.0"
+
 [solve-meta]
   analyzer-name = "dep"
   analyzer-version = 1
@@ -699,6 +1000,7 @@
     "github.com/hashicorp/terraform/helper/validation",
     "github.com/hashicorp/terraform/plugin",
     "github.com/hashicorp/terraform/terraform",
+    "github.com/terraform-providers/terraform-provider-aws/aws",
   ]
   solver-name = "gps-cdcl"
   solver-version = 1
