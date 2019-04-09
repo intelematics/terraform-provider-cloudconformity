@@ -12,11 +12,11 @@ func dataSourceAccount() *schema.Resource {
 		Schema: map[string]*schema.Schema{
 			"id": {
 				Type:     schema.TypeString,
-				Required: true,
+				Computed: true,
 			},
 			"name": {
 				Type:     schema.TypeString,
-				Computed: true,
+				Required: true,
 			},
 		},
 	}
@@ -24,16 +24,29 @@ func dataSourceAccount() *schema.Resource {
 
 func dataAccountRead(d *schema.ResourceData, meta interface{}) error {
 	client := meta.(*sdk.Client)
-	accountId := d.Get("id").(string)
-	account, err := client.GetAccount(accountId)
+	accountName := d.Get("name").(string)
+	accounts, err := client.ListAccounts()
 
 	if err != nil {
-		return fmt.Errorf("error finding application %q: %s", accountId, err)
+		return fmt.Errorf("error finding account %s: %s", accountName, err)
 	}
 
-	d.SetId(account.Id)
-	_ = d.Set("name", account.Name)
-	_ = d.Set("id", account.Id)
+	var accountOverview *sdk.AccountOverview
+
+	for _, account := range accounts {
+		if accountName == account.Name {
+			accountOverview = &account
+			break
+		}
+	}
+
+	if accountOverview == nil {
+		return fmt.Errorf("unable to find account %s", accountName)
+	}
+
+	d.SetId(accountOverview.Id)
+	_ = d.Set("name", accountOverview.Name)
+	_ = d.Set("id", accountOverview.Id)
 
 	return nil
 }
