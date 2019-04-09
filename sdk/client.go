@@ -1,29 +1,22 @@
 package sdk
 
-import (
-	"fmt"
-	"net/http"
-)
-
 type Client struct {
 	apiKey string
 	region string
 }
 
 type Account struct {
-	Name string
-	Id   string
+	Id          string
+	Name        string
+	Environment string
+	RoleArn     string
+	ExternalId  string
 }
 
-func (client Client) getUrl(path string) string {
-	return fmt.Sprintf("https://%s-api.cloudconformity.com/v1/%s", client.region, path)
-}
-
-func (client Client) addHeaders(request *http.Request) {
-	request.Header = map[string][]string{
-		"Authorization": {fmt.Sprintf("ApiKey %s", client.apiKey)},
-		"Content-Type":  {"application/vnd.api+json"},
-	}
+type AccountOverview struct {
+	Id          string
+	Name        string
+	Environment string
 }
 
 func (client Client) DeleteAccount(id string) error {

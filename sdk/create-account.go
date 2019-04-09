@@ -19,11 +19,11 @@ type createAccountAccess struct {
 }
 
 type createAccountAttributes struct {
-	Name        string              `json:"name"`
-	Environment string              `json:"environment"`
-	Access      createAccountAccess `json:"access"`
-	CostPackage bool `json:"costPackage"`
-	HasRealTimeMonitoring bool `json:"hasRealTimeMonitoring"`
+	Name                  string              `json:"name"`
+	Environment           string              `json:"environment"`
+	Access                createAccountAccess `json:"access"`
+	CostPackage           bool                `json:"costPackage"`
+	HasRealTimeMonitoring bool                `json:"hasRealTimeMonitoring"`
 }
 
 type createAccountData struct {
