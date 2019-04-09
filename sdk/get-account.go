@@ -8,12 +8,13 @@ import (
 	"net/http"
 )
 
-
 type CreateAccountRequest struct {
-	Name        string `json:"name"`
-	Environment string `json:"environment"`
-	Role        string `json:"role"`
-	ExternalId  string `json:"external-id"`
+	Name        string
+	Environment string
+	Role        string
+	ExternalId  string
+	HasRealTimeMonitoring bool
+	CostPackage bool
 }
 
 type accountData struct {
