@@ -6,11 +6,22 @@ type Client struct {
 }
 
 type Account struct {
-	Id          string
-	Name        string
-	Environment string
-	RoleArn     string
-	ExternalId  string
+	Id                    string
+	Name                  string
+	Environment           string
+	HasRealTimeMonitoring bool
+	SecurityPackage       bool
+	CostPackage           bool
+}
+
+type CreateAccountRequest struct {
+	Name                  string
+	Environment           string
+	Role                  string
+	ExternalId            string
+	HasRealTimeMonitoring bool
+	CostPackage           bool
+	SecurityPackage       bool
 }
 
 type AccountOverview struct {
@@ -19,8 +30,9 @@ type AccountOverview struct {
 	Environment string
 }
 
-func (client Client) DeleteAccount(id string) error {
-	return nil
+type AccountAccessSettings struct {
+	RoleArn    string
+	ExternalId string
 }
 
 func NewClient(apiKey string, region string) *Client {

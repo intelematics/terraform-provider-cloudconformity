@@ -17,7 +17,7 @@ func init() {
 	testAccProvider = Provider().(*schema.Provider)
 	testAccProvidersWithAws = map[string]terraform.ResourceProvider{
 		"cloudconformity": testAccProvider,
-		"aws": aws.Provider(),
+		"aws":             aws.Provider(),
 	}
 
 	testAccProviders = map[string]terraform.ResourceProvider{
