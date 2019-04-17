@@ -2,6 +2,10 @@ package sdk
 
 import "fmt"
 
+type getAccountAccessSettingsAttributes struct {
+	Configuration getAccountAccessSettingsConfiguration `json:"configuration"`
+}
+
 type getAccountAccessSettingsConfiguration struct {
 	ExternalId string `json:"externalId"`
 	RoleArn    string `json:"roleArn"`
@@ -9,7 +13,7 @@ type getAccountAccessSettingsConfiguration struct {
 
 func (client Client) GetAccountAccessSettings(id string) (*AccountAccessSettings, error) {
 	results := struct {
-		Attributes getAccountAccessSettingsConfiguration `json:"attributes"`
+		Attributes getAccountAccessSettingsAttributes `json:"attributes"`
 	}{}
 
 	err := client.genericGet(fmt.Sprintf("accounts/%s/access", id), &results)
@@ -18,8 +22,8 @@ func (client Client) GetAccountAccessSettings(id string) (*AccountAccessSettings
 	}
 
 	result := AccountAccessSettings{
-		ExternalId: results.Attributes.ExternalId,
-		RoleArn:    results.Attributes.RoleArn,
+		ExternalId: results.Attributes.Configuration.ExternalId,
+		RoleArn:    results.Attributes.Configuration.RoleArn,
 	}
 
 	return &result, nil

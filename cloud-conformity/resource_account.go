@@ -92,6 +92,7 @@ func resourceAccountRead(d *schema.ResourceData, meta interface{}) error {
 
 	_ = d.Set("role_arn", settings.RoleArn)
 	_ = d.Set("external_id", settings.ExternalId)
+	_ = d.Set("account_id", account.Id)
 
 	return nil
 }
@@ -122,4 +123,3 @@ func resourceAccountUpdate(d *schema.ResourceData, meta interface{}) error {
 
 	return nil
 }
-

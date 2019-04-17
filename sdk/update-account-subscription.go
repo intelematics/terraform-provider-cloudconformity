@@ -3,9 +3,9 @@ package sdk
 import "fmt"
 
 type updateAccountSubscriptionAttributes struct {
-	CostPackage bool `json:"costPackage"`
+	CostPackage        bool `json:"costPackage"`
 	RealTimeMonitoring bool `json:"hasRealTimeMonitoring"`
-	SecurityPackage bool `json:"securityPackage"`
+	SecurityPackage    bool `json:"securityPackage"`
 }
 
 func (client Client) UpdateAccountSubscription(id string, cost bool, realtime bool, security bool) error {
