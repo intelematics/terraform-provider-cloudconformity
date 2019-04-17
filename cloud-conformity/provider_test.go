@@ -4,6 +4,7 @@ import (
 	"github.com/hashicorp/terraform/helper/schema"
 	"github.com/hashicorp/terraform/terraform"
 	"github.com/terraform-providers/terraform-provider-aws/aws"
+	"github.com/terraform-providers/terraform-provider-null/null"
 	"os"
 	"testing"
 )
@@ -18,6 +19,7 @@ func init() {
 	testAccProvidersWithAws = map[string]terraform.ResourceProvider{
 		"cloudconformity": testAccProvider,
 		"aws":             aws.Provider(),
+		"null":            null.Provider(),
 	}
 
 	testAccProviders = map[string]terraform.ResourceProvider{

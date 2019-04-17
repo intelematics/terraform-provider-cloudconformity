@@ -22,6 +22,7 @@ type CreateAccountRequest struct {
 	HasRealTimeMonitoring bool
 	CostPackage           bool
 	SecurityPackage       bool
+	Retries               int
 }
 
 type AccountOverview struct {

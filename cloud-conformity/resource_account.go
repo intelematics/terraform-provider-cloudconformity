@@ -24,7 +24,8 @@ func resourceAccount() *schema.Resource {
 			},
 			"role_arn": {
 				Type:     schema.TypeString,
-				Required: true,
+				Optional: true,
+				Computed: true,
 			},
 			"external_id": {
 				Type:     schema.TypeString,
@@ -49,6 +50,11 @@ func resourceAccount() *schema.Resource {
 				Type:     schema.TypeString,
 				Computed: true,
 			},
+			"retries": {
+				Type:     schema.TypeInt,
+				Optional: true,
+				Default:  0,
+			},
 		},
 	}
 }
@@ -63,6 +69,7 @@ func resourceAccountCreate(d *schema.ResourceData, meta interface{}) error {
 		HasRealTimeMonitoring: d.Get("real_time_monitoring").(bool),
 		CostPackage:           d.Get("cost_package").(bool),
 		SecurityPackage:       d.Get("security_package").(bool),
+		Retries:               d.Get("retries").(int),
 	}
 	account, err := client.CreateAccount(accountRequest)
 	if err != nil {
