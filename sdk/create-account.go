@@ -1,10 +1,5 @@
 package sdk
 
-import (
-	"fmt"
-	"time"
-)
-
 type createAccountAccessKeys struct {
 	RoleArn    string `json:"roleArn"`
 	ExternalId string `json:"externalId"`
@@ -49,20 +44,9 @@ func (client Client) CreateAccount(request CreateAccountRequest) (string, error)
 		Data createAccountResponse `json:"data"`
 	}{}
 
-	retries := request.Retries
-
-	for {
-		fmt.Printf("Trying to create Account %d",retries)
-		err := client.genericPost("accounts", &payload, &output)
-		if err == nil {
-			break
-		}
-		if err != nil && retries == 0 {
-			return "", err
-		}
-		retries -= 1
-		time.Sleep(2 * time.Second)
+	err := client.genericPost("accounts", &payload, &output)
+	if err != nil {
+		return "", err
 	}
-
 	return output.Data.Id, nil
 }

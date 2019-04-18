@@ -1,8 +1,10 @@
 package cloud_conformity
 
 import (
+	"github.com/hashicorp/terraform/helper/resource"
 	"github.com/hashicorp/terraform/helper/schema"
 	"github.com/intelematics/terraform-provider-cloudconformity/sdk"
+	"time"
 )
 
 func resourceAccount() *schema.Resource {
@@ -50,11 +52,14 @@ func resourceAccount() *schema.Resource {
 				Type:     schema.TypeString,
 				Computed: true,
 			},
-			"retries": {
-				Type:     schema.TypeInt,
-				Optional: true,
-				Default:  0,
-			},
+			//"retries": {
+			//	Type:     schema.TypeInt,
+			//	Optional: true,
+			//	Default:  0,
+			//},
+		},
+		Timeouts: &schema.ResourceTimeout{
+			Create: schema.DefaultTimeout(1 * time.Minute),
 		},
 	}
 }
@@ -69,23 +74,29 @@ func resourceAccountCreate(d *schema.ResourceData, meta interface{}) error {
 		HasRealTimeMonitoring: d.Get("real_time_monitoring").(bool),
 		CostPackage:           d.Get("cost_package").(bool),
 		SecurityPackage:       d.Get("security_package").(bool),
-		Retries:               d.Get("retries").(int),
 	}
-	account, err := client.CreateAccount(accountRequest)
+	err := resource.Retry(d.Timeout(schema.TimeoutCreate), func() *resource.RetryError {
+		account, err := client.CreateAccount(accountRequest)
+		if err != nil {
+			return resource.RetryableError(err)
+		}
+		d.SetId(account)
+		return nil
+	})
 	if err != nil {
 		return err
+	} else {
+		return resourceAccountRead(d, meta)
 	}
-	d.SetId(account)
-	return resourceAccountRead(d, meta)
 }
 
 func resourceAccountRead(d *schema.ResourceData, meta interface{}) error {
 	client := meta.(*sdk.Client)
+
 	account, err := client.GetAccount(d.Id())
 	if err != nil {
 		return err
 	}
-
 	settings, err := client.GetAccountAccessSettings(d.Id())
 	if err != nil {
 		return err

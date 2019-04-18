@@ -113,6 +113,5 @@ resource "cloudconformity_account" "test" {
 	environment = "%s"
 	role_arn = "${aws_iam_role.role.arn}"
 	external_id = "${data.cloudconformity_external_id.it.id}"
-	retries = 5
 }`, name, environment)
 }
