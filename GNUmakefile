@@ -8,6 +8,9 @@ default: build
 build: fmtcheck
 	go install
 
+build-linux: fmtcheck
+	env GOOS=linux GOARCH=arm go build -o ./releases/linux/terraform-provider-cloudconformity
+
 test: fmtcheck
 	go test -i $(TEST) || exit 1
 	echo $(TEST) | \
