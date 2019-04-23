@@ -12,6 +12,7 @@ type Account struct {
 	HasRealTimeMonitoring bool
 	SecurityPackage       bool
 	CostPackage           bool
+	Code                  string
 }
 
 type CreateAccountRequest struct {
@@ -23,6 +24,7 @@ type CreateAccountRequest struct {
 	CostPackage           bool
 	SecurityPackage       bool
 	Retries               int
+	Code                  string
 }
 
 type AccountOverview struct {

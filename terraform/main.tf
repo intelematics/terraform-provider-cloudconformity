@@ -43,9 +43,10 @@ resource "aws_iam_role_policy_attachment" "readonly" {
   policy_arn = "arn:aws:iam::aws:policy/ReadOnlyAccess"
 }
 
-resource "cloudconformity_account" "test" {
-  name        = "test-account"
-  environment = "test"
+resource "cloudconformity_account" "test1" {
+  name        = "test-account1"
+  environment = "prod"
   role_arn    = "${aws_iam_role.role.arn}"
   external_id = "${data.cloudconformity_external_id.it.id}"
+  cost_package = false
 }

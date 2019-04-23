@@ -52,11 +52,6 @@ func resourceAccount() *schema.Resource {
 				Type:     schema.TypeString,
 				Computed: true,
 			},
-			//"retries": {
-			//	Type:     schema.TypeInt,
-			//	Optional: true,
-			//	Default:  0,
-			//},
 		},
 		Timeouts: &schema.ResourceTimeout{
 			Create: schema.DefaultTimeout(1 * time.Minute),
@@ -128,6 +123,15 @@ func resourceAccountExists(d *schema.ResourceData, meta interface{}) (bool, erro
 
 func resourceAccountUpdate(d *schema.ResourceData, meta interface{}) error {
 	client := meta.(*sdk.Client)
+
+	if d.HasChange("name") || d.HasChange("environment") {
+		name := d.Get("name").(string)
+		environment := d.Get("environment").(string)
+		err := client.UpdateAccount(d.Id(), name, environment)
+		if err != nil {
+			return err
+		}
+	}
 
 	if d.HasChange("cost_package") || d.HasChange("real_time_monitoring") || d.HasChange("security_package") {
 		cost := d.Get("cost_package").(bool)

@@ -3,6 +3,8 @@ package cloud_conformity
 import (
 	"fmt"
 	"github.com/hashicorp/terraform/helper/resource"
+	"github.com/hashicorp/terraform/terraform"
+	"github.com/intelematics/terraform-provider-cloudconformity/sdk"
 	"testing"
 )
 
@@ -10,11 +12,12 @@ func TestAccAccountCreate__Basic(t *testing.T) {
 	name := "cloudconformity_account.test"
 
 	resource.Test(t, resource.TestCase{
-		PreCheck:  func() { testAccPreCheck(t) },
-		Providers: testAccProvidersWithAws,
+		PreCheck:     func() { testAccPreCheck(t) },
+		Providers:    testAccProvidersWithAws,
+		CheckDestroy: testAccountDeleted,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccount_tofix("test-account", "test"),
+				Config: testAccountSet("test-account", "test"),
 				Check: resource.ComposeTestCheckFunc(
 					resource.TestCheckResourceAttr(name, "name", "test-account"),
 					resource.TestCheckResourceAttr(name, "environment", "test"),
@@ -37,7 +40,7 @@ func TestAccAccountUpdate(t *testing.T) {
 		Providers: testAccProvidersWithAws,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccount("test-account", "test", true),
+				Config: testAccountUpdate("test-account", "test", true),
 				Check: resource.ComposeTestCheckFunc(
 					resource.TestCheckResourceAttr(name, "name", "test-account"),
 					resource.TestCheckResourceAttr(name, "environment", "test"),
@@ -48,10 +51,10 @@ func TestAccAccountUpdate(t *testing.T) {
 				),
 			},
 			{
-				Config: testAccount("test-account", "test", false),
+				Config: testAccountUpdate("test-account1", "prod", false),
 				Check: resource.ComposeTestCheckFunc(
-					resource.TestCheckResourceAttr(name, "name", "test-account"),
-					resource.TestCheckResourceAttr(name, "environment", "test"),
+					resource.TestCheckResourceAttr(name, "name", "test-account1"),
+					resource.TestCheckResourceAttr(name, "environment", "prod"),
 					resource.TestCheckResourceAttr(name, "real_time_monitoring", "true"),
 					resource.TestCheckResourceAttr(name, "cost_package", "false"),
 					resource.TestCheckResourceAttr(name, "security_package", "true"),
@@ -62,7 +65,7 @@ func TestAccAccountUpdate(t *testing.T) {
 	})
 }
 
-func testAccount(name, environment string, cost_package bool) string {
+func testAccountUpdate(name, environment string, cost_package bool) string {
 	return fmt.Sprintf(`
 resource "cloudconformity_account" "test" {
 	name = "%s"
@@ -73,7 +76,7 @@ resource "cloudconformity_account" "test" {
 }`, name, environment, cost_package)
 }
 
-func testAccount_tofix(name, environment string) string {
+func testAccountSet(name, environment string) string {
 	return fmt.Sprintf(`
 provider "aws" {
   region = "ap-southeast-2"
@@ -98,7 +101,7 @@ data "aws_iam_policy_document" "assume" {
 }
 
 resource "aws_iam_role" "role" {
-  name = "nc-test-role"
+  name = "cc-role"
   assume_role_policy = "${data.aws_iam_policy_document.assume.json}"
   permissions_boundary = "arn:aws:iam::566134440840:policy/managed-permission-boundary"
 }
@@ -114,4 +117,21 @@ resource "cloudconformity_account" "test" {
 	role_arn = "${aws_iam_role.role.arn}"
 	external_id = "${data.cloudconformity_external_id.it.id}"
 }`, name, environment)
+}
+
+func testAccountDeleted(s *terraform.State) error {
+
+	client := testAccProvider.Meta().(*sdk.Client)
+
+	for _, rs := range s.RootModule().Resources {
+		if rs.Type != "cloudconformity_account" {
+			continue
+		}
+		_, err := client.GetAccount(rs.Primary.ID)
+		if err == nil {
+			return fmt.Errorf("account not destroyed, %s ", rs.Primary.ID)
+		}
+	}
+
+	return nil
 }
