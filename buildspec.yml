@@ -3,7 +3,6 @@ version: 0.2
 environment_variables:
   plaintext:
     PACKAGE: "github.com/intelematics/terraform-provider-cloudconformity"
-    GOPATH: "/go/src"
 
 phases:
   install:
@@ -12,20 +11,20 @@ phases:
       - echo GOPATH - $GOPATH
 
       - echo Create dir in GOPATH for sources
-      - mkdir -p ${GOPATH}/src/${PACKAGE}
+      - mkdir -p /go/src/${PACKAGE}
 
       - echo Copy source files into GOPATH
-      - echo cp -a ${CODEBUILD_SRC_DIR}/.  ${GOPATH}/src/${PACKAGE}
-      - cp -a ${CODEBUILD_SRC_DIR}/.  ${GOPATH}/src/${PACKAGE}
+      - echo cp -a ${CODEBUILD_SRC_DIR}/.  /go/src/${PACKAGE}
+      - cp -a ${CODEBUILD_SRC_DIR}/.  /go/src/${PACKAGE}
 
-      - cd ${GOPATH}/src/${PACKAGE}
+      - cd /go/src/${PACKAGE}
   pre_build:
     commands:
       - echo Logging in to Amazon ECR...
       - $(aws ecr get-login --no-include-email --region $AWS_DEFAULT_REGION)
   build:
     commands:
-      - cd ${GOPATH}/src/${PACKAGE} && go build -o ${CODEBUILD_SRC_DIR}/terraform
+      - cd /go/src/${PACKAGE} && go build -o /go/src/${PACKAGE}/terraform
       - cd terraform
       - echo Building docker image...
       - docker build -t $IMAGE_REPO_NAME:$CODEBUILD_RESOLVED_SOURCE_VERSION .
