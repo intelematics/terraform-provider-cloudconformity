@@ -9,6 +9,7 @@ phases:
     commands:
       - echo CODEBUILD_SRC_DIR - $CODEBUILD_SRC_DIR
       - echo GOPATH - $GOPATH
+      - echo GOROOT - $GOROOT
 
       - echo Create dir in GOPATH for sources
       - mkdir -p /go/src/${PACKAGE}
