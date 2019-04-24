@@ -24,7 +24,7 @@ phases:
       - $(aws ecr get-login --no-include-email --region $AWS_DEFAULT_REGION)
   build:
     commands:
-      - cd /go/src/${PACKAGE} && go build -o /go/src/${PACKAGE}/terraform
+      - cd /go/src/${PACKAGE} && go build -o /go/src/${PACKAGE}/terraform/terraform-provider-cloudconformity
       - cd terraform
       - echo Building docker image...
       - docker build -t $IMAGE_REPO_NAME:$CODEBUILD_RESOLVED_SOURCE_VERSION .
