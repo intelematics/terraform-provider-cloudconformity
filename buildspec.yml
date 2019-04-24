@@ -3,6 +3,7 @@ version: 0.2
 environment_variables:
   plaintext:
     PACKAGE: "github.com/intelematics/terraform-provider-cloudconformity"
+    GOPATH: "/go/src"
 
 phases:
   install:
