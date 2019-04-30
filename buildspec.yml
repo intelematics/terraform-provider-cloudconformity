@@ -1,21 +1,34 @@
 version: 0.2
 
-environment_variables:
-  plaintext:
-    IMAGE_REPO_NAME: "terraform-provider-cloudconformity"
-    PACKAGE: "github.com/intelematics/terraform-provider-cloudconformity"
-    GOHOME: "/go"
+"environmentVariables": [
+  {
+    "name": "PACKAGE",
+    "value": "github.com/intelematics/terraform-provider-cloudconformity"
+  },
+  {
+    "name": "GO_HOME",
+    "value": "/go"
+  },
+  {
+    "name": "IMAGE_REPO_NAME",
+    "value": "terraform-provider-cloudconformity"
+  },
+  {
+    "name": "IMAGE_TAG",
+    "value": "latest"
+  }
+]
 
 phases:
   install:
     commands:
       - echo CODEBUILD_SRC_DIR - $CODEBUILD_SRC_DIR
       - echo Create dir in GOPATH for sources...
-      - mkdir -p ${GOHOME}/src/${PACKAGE}
+      - mkdir -p ${GO_HOME}/src/${PACKAGE}
       - echo Copy source files into GOPATH...
-      - echo cp -a ${CODEBUILD_SRC_DIR}/.  ${GOHOME}/src/${PACKAGE}
-      - cp -a ${CODEBUILD_SRC_DIR}/.  ${GOHOME}/src/${PACKAGE}
-      - cd ${GOHOME}/src/${PACKAGE}
+      - echo cp -a ${CODEBUILD_SRC_DIR}/.  ${GO_HOME}/src/${PACKAGE}
+      - cp -a ${CODEBUILD_SRC_DIR}/.  ${GO_HOME}/src/${PACKAGE}
+      - cd ${GO_HOME}/src/${PACKAGE}
   pre_build:
     commands:
       - echo Logging in to Amazon ECR....
@@ -23,11 +36,11 @@ phases:
   build:
     commands:
       - echo Building the provider...
-      - cd ${GOHOME}/src/${PACKAGE} && go build -o ${GOHOME}/src/${PACKAGE}/docker/terraform-provider-cloudconformity
+      - cd ${GO_HOME}/src/${PACKAGE} && go build -o ${GO_HOME}/src/${PACKAGE}/docker/terraform-provider-cloudconformity
       - cd docker
       - echo Building docker image...
-      - docker build -t $IMAGE_REPO_NAME .
-      - docker tag $IMAGE_REPO_NAME $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$IMAGE_REPO_NAME
+      - docker build -t $IMAGE_REPO_NAME:IMAGE_TAG .
+      - docker tag $IMAGE_REPO_NAME:IMAGE_TAG $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$IMAGE_REPO_NAME
   post_build:
     commands:
       - echo Build completed on `date`
