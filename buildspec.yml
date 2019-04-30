@@ -2,6 +2,7 @@ version: 0.2
 
 environment_variables:
   plaintext:
+    IMAGE_REPO_NAME: "terraform-provider-cloudconformity"
     PACKAGE: "github.com/intelematics/terraform-provider-cloudconformity"
     GOHOME: "/go"
 
@@ -17,7 +18,7 @@ phases:
       - cd ${GOHOME}/src/${PACKAGE}
   pre_build:
     commands:
-      - echo Logging in to Amazon ECR...
+      - echo Logging in to Amazon ECR....
       - $(aws ecr get-login --no-include-email --region $AWS_DEFAULT_REGION)
   build:
     commands:
