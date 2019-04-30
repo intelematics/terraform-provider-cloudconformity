@@ -27,8 +27,8 @@ phases:
       - cd $GO_HOME/src/$PACKAGE && go build -o $GO_HOME/src/$PACKAGE/docker/terraform-provider-cloudconformity
       - cd docker
       - echo Building docker image...
-      - docker build -t $IMAGE_REPO_NAME:${CODEBUILD_SOURCE_VERSION} .
-      - docker tag $IMAGE_REPO_NAME:${CODEBUILD_SOURCE_VERSION} $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$IMAGE_REPO_NAME:${CODEBUILD_SOURCE_VERSION}
+      - docker build -t $IMAGE_REPO_NAME:${CCODEBUILD_WEBHOOK_HEAD_REF} .
+      - docker tag $IMAGE_REPO_NAME:${CODEBUILD_WEBHOOK_HEAD_REF} $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$IMAGE_REPO_NAME:${CODEBUILD_WEBHOOK_HEAD_REF}
   post_build:
     commands:
       - echo Build completed on `date`
