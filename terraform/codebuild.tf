@@ -73,3 +73,7 @@ resource "aws_iam_policy_attachment" "attach" {
 
   policy_arn = "${aws_iam_policy.ecr-policy.arn}"
 }
+
+resource "aws_ecr_repository" "terraform-provider-cloudconformity" {
+  name = "terraform-provider-cloudconformity"
+}
