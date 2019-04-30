@@ -24,11 +24,11 @@ phases:
     commands:
       - echo CODEBUILD_SRC_DIR - $CODEBUILD_SRC_DIR
       - echo Create dir in GOPATH for sources...
-      - mkdir -p ${GO_HOME}/src/${PACKAGE}
+      - mkdir -p $GO_HOME/src/$PACKAGE
       - echo Copy source files into GOPATH...
-      - echo cp -a ${CODEBUILD_SRC_DIR}/.  ${GO_HOME}/src/${PACKAGE}
-      - cp -a ${CODEBUILD_SRC_DIR}/.  ${GO_HOME}/src/${PACKAGE}
-      - cd ${GO_HOME}/src/${PACKAGE}
+      - echo cp -a ${CODEBUILD_SRC_DIR}/.  $GO_HOME/src/$PACKAGE
+      - cp -a ${CODEBUILD_SRC_DIR}/.  $GO_HOME/src/$PACKAGE
+      - cd $GO_HOME/src/$PACKAGE
   pre_build:
     commands:
       - echo Logging in to Amazon ECR....
@@ -36,7 +36,7 @@ phases:
   build:
     commands:
       - echo Building the provider...
-      - cd ${GO_HOME}/src/${PACKAGE} && go build -o ${GO_HOME}/src/${PACKAGE}/docker/terraform-provider-cloudconformity
+      - cd $GO_HOME/src/$PACKAGE && go build -o $GO_HOME/src/$PACKAGE/docker/terraform-provider-cloudconformity
       - cd docker
       - echo Building docker image...
       - docker build -t $IMAGE_REPO_NAME:IMAGE_TAG .
