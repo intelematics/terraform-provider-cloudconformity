@@ -16,7 +16,7 @@ phases:
       - echo CODEBUILD_WEBHOOK_HEAD_REF - $CODEBUILD_WEBHOOK_HEAD_REF
       - echo CODEBUILD_WEBHOOK_TRIGGER - $CODEBUILD_WEBHOOK_TRIGGER
       - echo CODEBUILD_SRC_DIR - $CODEBUILD_SRC_DIR
-      - A = $(echo 'one_two_three_four_five' | cut -d'_' -f2)" && echo A
+      - echo $($CODEBUILD_WEBHOOK_HEAD_REF | cut -d'/' -f3)
       - echo Create dir in GOPATH for sources...
       - mkdir -p $GO_HOME/src/$PACKAGE
       - echo Copy source files into GOPATH...
