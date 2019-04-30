@@ -1,23 +1,11 @@
 version: 0.2
 
-"environmentVariables": [
-  {
-    "name": "PACKAGE",
-    "value": "github.com/intelematics/terraform-provider-cloudconformity"
-  },
-  {
-    "name": "GO_HOME",
-    "value": "/go"
-  },
-  {
-    "name": "IMAGE_REPO_NAME",
-    "value": "terraform-provider-cloudconformity"
-  },
-  {
-    "name": "IMAGE_TAG",
-    "value": "latest"
-  }
-]
+env:
+  variables:
+    PACKAGE: "github.com/intelematics/terraform-provider-cloudconformity"
+    GO_HOME: "/go"
+    IMAGE_REPO_NAME: "terraform-provider-cloudconformity"
+    IMAGE_TAG: "latest"
 
 phases:
   install:
