@@ -12,6 +12,9 @@ phases:
     commands:
       - echo CODEBUILD_SRC_DIR - $CODEBUILD_SRC_DIR
       - echo Create dir in GOPATH for sources...
+      - SOURCE=$(echo $CODEBUILD_WEBHOOK_TRIGGER | awk '{split($0,a,"/"); print a[1]}')
+      - echo $SOURCE
+      - IMAGE_TAG=$SOURCE
       - mkdir -p $GO_HOME/src/$PACKAGE
       - echo Copy source files into GOPATH...
       - echo cp -a ${CODEBUILD_SRC_DIR}/.  $GO_HOME/src/$PACKAGE
@@ -23,6 +26,7 @@ phases:
       - $(aws ecr get-login --no-include-email --region $AWS_DEFAULT_REGION)
   build:
     commands:
+      - echo $IMAGE_TAG
       - echo Building the provider...
       - cd $GO_HOME/src/$PACKAGE && go build -o $GO_HOME/src/$PACKAGE/docker/terraform-provider-cloudconformity
       - cd docker
