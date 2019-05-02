@@ -19,8 +19,8 @@ type createAccountAttributes struct {
 }
 
 type createAccountData struct {
-	Type        string                  `json:"type"`
-	Attributres createAccountAttributes `json:"attributes"`
+	Type       string                  `json:"type"`
+	Attributes createAccountAttributes `json:"attributes"`
 }
 
 type createAccountResponse struct {
@@ -32,13 +32,13 @@ func (client Client) CreateAccount(request CreateAccountRequest) (string, error)
 		Data createAccountData `json:"data"`
 	}{}
 	payload.Data.Type = "account"
-	payload.Data.Attributres.Access.Keys.ExternalId = request.ExternalId
-	payload.Data.Attributres.Access.Keys.RoleArn = request.Role
-	payload.Data.Attributres.Environment = request.Environment
-	payload.Data.Attributres.Name = request.Name
-	payload.Data.Attributres.CostPackage = request.CostPackage
-	payload.Data.Attributres.SecurityPackage = request.SecurityPackage
-	payload.Data.Attributres.HasRealTimeMonitoring = request.HasRealTimeMonitoring
+	payload.Data.Attributes.Access.Keys.ExternalId = request.ExternalId
+	payload.Data.Attributes.Access.Keys.RoleArn = request.Role
+	payload.Data.Attributes.Environment = request.Environment
+	payload.Data.Attributes.Name = request.Name
+	payload.Data.Attributes.CostPackage = request.CostPackage
+	payload.Data.Attributes.SecurityPackage = request.SecurityPackage
+	payload.Data.Attributes.HasRealTimeMonitoring = request.HasRealTimeMonitoring
 
 	output := struct {
 		Data createAccountResponse `json:"data"`
