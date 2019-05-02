@@ -14,7 +14,7 @@ func TestAccAccountGet(t *testing.T) {
 		Providers: testAccProviders,
 		Steps: []resource.TestStep{
 			{
-				Config: testDataSourceAccountConfig("HiGVOhutb"),
+				Config: testDataSourceAccountConfig("FordSync US"),
 				Check: resource.ComposeTestCheckFunc(
 					resource.TestCheckResourceAttr(name, "id", "HiGVOhutb"),
 					resource.TestCheckResourceAttr(name, "name", "FordSync US"),
@@ -27,7 +27,7 @@ func TestAccAccountGet(t *testing.T) {
 func testDataSourceAccountConfig(accountId string) string {
 	return fmt.Sprintf(`
 data "cloudconformity_account" "test" {
-	id = "%s"
+	name = "%s"
 }
 `, accountId)
 }

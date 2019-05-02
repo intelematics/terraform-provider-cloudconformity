@@ -23,7 +23,7 @@ func Provider() terraform.ResourceProvider {
 			},
 		},
 		DataSourcesMap: map[string]*schema.Resource{
-			"cloudconformity_account": dataSourceAccount(),
+			"cloudconformity_account":     dataSourceAccount(),
 			"cloudconformity_external_id": dataSourceExternalId(),
 		},
 		ResourcesMap: map[string]*schema.Resource{

@@ -1,0 +1,40 @@
+version: 0.2
+
+env:
+  variables:
+    PACKAGE: "github.com/intelematics/terraform-provider-cloudconformity"
+    GO_HOME: "/go"
+    IMAGE_REPO_NAME: "terraform-provider-cloudconformity"
+    IMAGE_TAG: "latest"
+
+phases:
+  install:
+    commands:
+      - echo CODEBUILD_SRC_DIR - $CODEBUILD_SRC_DIR
+      - echo Create dir in GOPATH for sources...
+      - SOURCE=$(echo $CODEBUILD_WEBHOOK_TRIGGER | awk '{split($0,a,"/"); print a[1]}')
+      - echo $SOURCE
+      - IMAGE_TAG=$SOURCE
+      - mkdir -p $GO_HOME/src/$PACKAGE
+      - echo Copy source files into GOPATH...
+      - echo cp -a ${CODEBUILD_SRC_DIR}/.  $GO_HOME/src/$PACKAGE
+      - cp -a ${CODEBUILD_SRC_DIR}/.  $GO_HOME/src/$PACKAGE
+      - cd $GO_HOME/src/$PACKAGE
+  pre_build:
+    commands:
+      - echo Logging in to Amazon ECR...
+      - $(aws ecr get-login --no-include-email --region $AWS_DEFAULT_REGION)
+  build:
+    commands:
+      - echo $IMAGE_TAG
+      - echo Building the provider...
+      - cd $GO_HOME/src/$PACKAGE && go build -o $GO_HOME/src/$PACKAGE/docker/terraform-provider-cloudconformity
+      - cd docker
+      - echo Building docker image...
+      - docker build -t $IMAGE_REPO_NAME:$CODEBUILD_RESOLVED_SOURCE_VERSION .
+      - docker tag $IMAGE_REPO_NAME:$CODEBUILD_RESOLVED_SOURCE_VERSION $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$IMAGE_REPO_NAME:$CODEBUILD_RESOLVED_SOURCE_VERSION
+  post_build:
+    commands:
+      - echo Build completed on `date`
+      - echo Pushing the Docker image...
+      - docker push $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$IMAGE_REPO_NAME:$CODEBUILD_RESOLVED_SOURCE_VERSION

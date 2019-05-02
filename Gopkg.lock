@@ -698,6 +698,14 @@
   version = "v2.4.0"
 
 [[projects]]
+  digest = "1:baa2dc0cf6e02ec0637688ca15f44b2864491bd10be0ac7d34ad35eb85b5925e"
+  name = "github.com/terraform-providers/terraform-provider-null"
+  packages = ["null"]
+  pruneopts = "UT"
+  revision = "b2442662fd5fbaad253d726e465af8c126163954"
+  version = "v2.1.1"
+
+[[projects]]
   digest = "1:2643d81498e38e44bdcf480be199cac55f29e97403b0342d962824bfe9960722"
   name = "github.com/ulikunitz/xz"
   packages = [
@@ -1001,6 +1009,7 @@
     "github.com/hashicorp/terraform/plugin",
     "github.com/hashicorp/terraform/terraform",
     "github.com/terraform-providers/terraform-provider-aws/aws",
+    "github.com/terraform-providers/terraform-provider-null/null",
   ]
   solver-name = "gps-cdcl"
   solver-version = 1
