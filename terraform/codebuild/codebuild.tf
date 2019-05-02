@@ -1,5 +1,5 @@
 module "codebuild-terraform-provider" {
-  source                        = "git@github.com:intelematics/bespin-ci-cd.git?ref=feat/first-commit//terraform/modules/codebuild"
+  source                        = "git@github.com:intelematics/bespin-ci-cd.git//terraform/modules/codebuild"
   github_auth_token             = "${var.github_auth_token}"
   codebuild_project_name        = "terraform-provider-cloudconformity"
   codebuild_project_description = "Terraform Cloud Conformity Provider"
