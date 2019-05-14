@@ -7,7 +7,7 @@
 
 SHELL := /bin/bash
 AWS_REGION ?= ap-southeast-2
-BUCKET ?= intelematics-cloud-conformity
+BUCKET ?= cconf
 SAML2AWS_BIN ?= saml2aws
 AWS_PROFILE ?= default
 IDP_ACCOUNT ?= default
@@ -21,10 +21,10 @@ AWS_SECRET_ACCESS_KEY ?= $(shell $(SAML2AWS_BIN) script --idp-account=$(IDP_ACCO
 AWS_SESSION_TOKEN ?= $(shell $(SAML2AWS_BIN) script --idp-account=$(IDP_ACCOUNT) --profile=$(AWS_PROFILE)| grep 'AWS_SESSION_TOKEN=".*"' | cut -d\" -f2)
 AWS_SECURITY_TOKEN ?= $(shell $(SAML2AWS_BIN) script --idp-account=$(IDP_ACCOUNT) --profile=$(AWS_PROFILE)| grep 'AWS_SECURITY_TOKEN=".*"' | cut -d\" -f2)
 
-TF_FOLDER ?= $(shell dirname $(CURDIR))
+TF_FOLDER ?= $(abspath $(dir $(lastword $(MAKEFILE_LIST)))/../)
 
 # Append these to Terraform flags
-TERRAFORM_FLAGS := -v $(TF_FOLDER):/usr/src --workdir /usr/src/terraform \
+TERRAFORM_FLAGS := -v $(TF_FOLDER):/usr/src --workdir /usr/src/test \
 	-e AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID} \
 	-e AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY} \
 	-e AWS_SESSION_TOKEN=${AWS_SESSION_TOKEN} \
