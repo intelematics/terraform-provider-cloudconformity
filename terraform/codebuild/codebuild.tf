@@ -77,3 +77,25 @@ resource "aws_iam_policy_attachment" "attach" {
 resource "aws_ecr_repository" "terraform-provider-cloudconformity" {
   name = "terraform-provider-cloudconformity"
 }
+
+data "aws_iam_policy_document" "ecr_permission_policy_doc" {
+  statement {
+    sid    = "AllowPull"
+    effect = "Allow"
+
+    principals {
+      identifiers = ["*"]
+      type        = "*"
+    }
+
+    actions = ["ecr:GetDownloadUrlForLayer",
+      "ecr:BatchGetImage",
+      "ecr:BatchCheckLayerAvailability",
+    ]
+  }
+}
+
+resource "aws_ecr_repository_policy" "ecr_permission_policy" {
+  policy     = "${data.aws_iam_policy_document.ecr_permission_policy_doc.json}"
+  repository = "${aws_ecr_repository.terraform-provider-cloudconformity.name}"
+}
