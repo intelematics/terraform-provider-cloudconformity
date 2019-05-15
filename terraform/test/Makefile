@@ -11,7 +11,7 @@ BUCKET ?= cconf
 SAML2AWS_BIN ?= saml2aws
 AWS_PROFILE ?= default
 IDP_ACCOUNT ?= default
-DOCKER_IMAGE_TERRAFORM = terraform-cloud-conformity
+DOCKER_IMAGE_TERRAFORM = 566134440840.dkr.ecr.ap-southeast-2.amazonaws.com/terraform-provider-cloudconformity:d66c3844056f0465ccd4cc3b7c38967e40a7aacb
 AWS_PROVIDER ?= aws
 
 
