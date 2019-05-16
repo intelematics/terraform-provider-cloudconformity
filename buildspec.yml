@@ -28,7 +28,8 @@ phases:
     commands:
       - echo $IMAGE_TAG
       - echo Building the provider...
-      - cd $GO_HOME/src/$PACKAGE && go build -o $GO_HOME/src/$PACKAGE/docker/terraform-provider-cloudconformity
+      - cd $GO_HOME/src/$PACKAGE
+      - GOOS=linux GOARCH=arm go build -o $GO_HOME/src/$PACKAGE/docker/terraform-provider-cloudconformity
       - cd docker
       - echo Building docker image...
       - docker build -t $IMAGE_REPO_NAME:$CODEBUILD_RESOLVED_SOURCE_VERSION .
