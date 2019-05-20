@@ -1,4 +1,4 @@
-FROM golang:1.12 as builder
+FROM golang:1.12-alpine as builder
 COPY . /go/src/github.com/intelematics/terraform-provider-cloudconformity/
 WORKDIR /go/src/github.com/intelematics/terraform-provider-cloudconformity/.
 RUN CGO_ENABLED=0 GOOS=linux go build -o terraform-provider-cloudconformity .
