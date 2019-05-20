@@ -1,7 +1,7 @@
 FROM golang:1.12 as builder
 COPY . /go/src/github.com/intelematics/terraform-provider-cloudconformity/
 WORKDIR /go/src/github.com/intelematics/terraform-provider-cloudconformity/.
-RUN CGO_ENABLED=0 go build -o terraform-provider-cloudconformity .
+RUN CGO_ENABLED=0 GOOS=linux go build -o terraform-provider-cloudconformity .
 
 FROM hashicorp/terraform:light as release
 RUN mkdir -p /root/.terraform.d/plugins/
