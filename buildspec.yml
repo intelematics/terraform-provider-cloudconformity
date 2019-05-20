@@ -29,6 +29,8 @@ phases:
       - echo $IMAGE_TAG
       - echo Building the provider...
       - cd $GO_HOME/src/$PACKAGE
+      - GOOS=linux go build -o terraform-provider-cloudconformity .
+      - echo Building docker image...
       - docker build -t $IMAGE_REPO_NAME:$CODEBUILD_RESOLVED_SOURCE_VERSION .
       - docker tag $IMAGE_REPO_NAME:$CODEBUILD_RESOLVED_SOURCE_VERSION $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$IMAGE_REPO_NAME:$CODEBUILD_RESOLVED_SOURCE_VERSION
   post_build:
