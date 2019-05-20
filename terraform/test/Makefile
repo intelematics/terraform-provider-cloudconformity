@@ -11,7 +11,7 @@ BUCKET ?= intelematics-cloud-conformity
 SAML2AWS_BIN ?= saml2aws
 AWS_PROFILE ?= default
 IDP_ACCOUNT ?= default
-DOCKER_IMAGE_TERRAFORM = 566134440840.dkr.ecr.ap-southeast-2.amazonaws.com/terraform-provider-cloudconformity:ef1c0724c3330c50f58d38658f56f56448124502
+DOCKER_IMAGE_TERRAFORM = terraform-cloud-conformity
 AWS_PROVIDER ?= aws
 
 
