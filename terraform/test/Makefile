@@ -11,7 +11,7 @@ BUCKET ?= intelematics-cloud-conformity
 SAML2AWS_BIN ?= saml2aws
 AWS_PROFILE ?= default
 IDP_ACCOUNT ?= default
-DOCKER_IMAGE_TERRAFORM = terraform-cloud-conformity
+DOCKER_IMAGE_TERRAFORM = 566134440840.dkr.ecr.ap-southeast-2.amazonaws.com/terraform-provider-cloudconformity:da3741af9aaf422103dba43325409d42a83f6824
 AWS_PROVIDER ?= aws
 
 
@@ -38,8 +38,12 @@ ifeq ($(INTERACTIVE), 1)
 	DOCKER_FLAGS += -t
 endif
 
+latest_terraform_image:
+	$(shell aws ecr get-login --registry-ids 566134440840 --no-include-email --region $(AWS_REGION))
+	docker pull $(DOCKER_IMAGE_TERRAFORM)
+
 .PHONY: aws-init
-aws-init:
+aws-init: latest_terraform_image
 	docker run --rm -i $(DOCKER_FLAGS) \
 		--name $(CONTAINER_NAME) \
 		${TERRAFORM_FLAGS} \
@@ -49,7 +53,7 @@ aws-init:
 		-backend-config "region=$(AWS_REGION)" \
 
 .PHONY: aws-plan
-aws-plan:
+aws-plan: latest_terraform_image
 		docker run \
 			--rm \
 			-i $(DOCKER_FLAGS) \
@@ -58,7 +62,7 @@ aws-plan:
 			plan \
 
 .PHONY: aws-apply
-aws-apply:
+aws-apply: latest_terraform_image
 		docker run \
 			--rm \
 			-i $(DOCKER_FLAGS) \
