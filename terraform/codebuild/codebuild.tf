@@ -99,3 +99,26 @@ resource "aws_ecr_repository_policy" "ecr_permission_policy" {
   policy     = "${data.aws_iam_policy_document.ecr_permission_policy_doc.json}"
   repository = "${aws_ecr_repository.terraform-provider-cloudconformity.name}"
 }
+
+resource "aws_ecr_lifecycle_policy" "lifecycle-policy" {
+  repository = "${aws_ecr_repository.terraform-provider-cloudconformity.name}"
+
+  policy = <<EOF
+{
+    "rules": [
+        {
+            "rulePriority": 1,
+            "description": "Keep last 30 images",
+            "selection": {
+                "tagStatus": "any",
+                "countType": "imageCountMoreThan",
+                "countNumber": 30
+            },
+            "action": {
+                "type": "expire"
+            }
+        }
+    ]
+}
+EOF
+}
