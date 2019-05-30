@@ -52,7 +52,7 @@ Using the provider
 Developing the Provider
 ---------------------------
 
-If you wish to work on the provider, you'll first need [Go](http://www.golang.org) installed on your machine (version 1.11+ is *required*). You'll also need to correctly setup a [GOPATH](http://golang.org/doc/code.html#GOPATH), as well as adding `$GOPATH/bin` to your `$PATH`.
+If you wish to work on the provider, you'll first need [Go](http://www.golang.org) installed on your machine (version 1.12+ is *required*). You'll also need to correctly setup a [GOPATH](http://golang.org/doc/code.html#GOPATH), as well as adding `$GOPATH/bin` to your `$PATH`.
 
 To compile the provider, run `make build`. This will build the provider and put the provider binary in the `$GOPATH/bin` directory.
 
@@ -76,3 +76,22 @@ In order to run the full suite of Acceptance tests, run `make testacc`.
 ```sh
 $ make testacc
 ```
+
+##Go Module Upgrade
+The `go.mod` file lists all required module dependencies.  Along with `go.sum`,
+it can be removed and recreated with:
+```
+go mod init
+```
+
+This replaces the older `dep` program and places the `vendor` directory in a
+centralised location outside the project.
+
+Go will fetch the latest versions of the dependencies to create the files.
+**However**, at the time of writing, the latest version of
+`terraform-provider-aws` generated compile errors.  It has been pinned to
+version 1.23.0 until these are resolved.
+
+Further details about using Go modules can be found
+[here](https://blog.golang.org/using-go-modules).  The `go.mod` file will always
+contain a reference to the last version retrieved with `go get`.
