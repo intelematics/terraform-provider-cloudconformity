@@ -1,6 +1,6 @@
 module "codebuild-terraform-provider" {
   source                        = "git@github.com:intelematics/bespin-ci-cd.git//terraform/modules/codebuild"
-  github_auth_token             = "${var.github_auth_token}"
+  github_auth_token             = var.github_auth_token
   codebuild_project_name        = "terraform-provider-cloudconformity"
   codebuild_project_description = "Terraform Cloud Conformity Provider"
   github_repository             = "https://github.com/intelematics/terraform-provider-cloudconformity.git"
@@ -61,7 +61,7 @@ data "aws_iam_policy_document" "ecr-policy-document" {
 
 resource "aws_iam_policy" "ecr-policy" {
   name   = "codebuild-ecr-policy"
-  policy = "${data.aws_iam_policy_document.ecr-policy-document.json}"
+  policy = data.aws_iam_policy_document.ecr-policy-document.json
 }
 
 resource "aws_iam_policy_attachment" "attach" {
@@ -71,7 +71,7 @@ resource "aws_iam_policy_attachment" "attach" {
     "terraform-provider-cloudconformity-role",
   ]
 
-  policy_arn = "${aws_iam_policy.ecr-policy.arn}"
+  policy_arn = aws_iam_policy.ecr-policy.arn
 }
 
 resource "aws_ecr_repository" "terraform-provider-cloudconformity" {
@@ -96,6 +96,6 @@ data "aws_iam_policy_document" "ecr_permission_policy_doc" {
 }
 
 resource "aws_ecr_repository_policy" "ecr_permission_policy" {
-  policy     = "${data.aws_iam_policy_document.ecr_permission_policy_doc.json}"
-  repository = "${aws_ecr_repository.terraform-provider-cloudconformity.name}"
+  policy     = data.aws_iam_policy_document.ecr_permission_policy_doc.json
+  repository = aws_ecr_repository.terraform-provider-cloudconformity.name
 }
