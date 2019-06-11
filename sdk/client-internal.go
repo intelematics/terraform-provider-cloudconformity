@@ -6,6 +6,7 @@ import (
 	"errors"
 	"fmt"
 	"io/ioutil"
+	"log"
 	"net/http"
 	"net/http/httputil"
 )
@@ -62,9 +63,10 @@ func (client Client) genericRequest(requestType string, path string, input inter
 	// Save a copy of this request for debugging.
 	requestReq, err := httputil.DumpRequest(req, true)
 	if err != nil {
-		fmt.Println(err)
+		log.Println(err)
 	}
-	fmt.Println(string(requestReq))
+	log.Println("[DEBUG] Cloud Conformity API Request: ")
+	log.Println(string(requestReq))
 
 	resp, err := http.DefaultClient.Do(req)
 	if err != nil {
@@ -74,9 +76,10 @@ func (client Client) genericRequest(requestType string, path string, input inter
 	// Save a copy of this response for debugging.
 	responseBody, err := httputil.DumpResponse(resp, true)
 	if err != nil {
-		fmt.Println(err)
+		log.Println(err)
 	}
-	fmt.Println(string(responseBody))
+	log.Println("[DEBUG] Cloud Conformity API Response: ")
+	log.Println(string(responseBody))
 
 	if resp.StatusCode < 200 || resp.StatusCode > 299 {
 		if resp.StatusCode == 404 {
