@@ -1,4 +1,4 @@
-Terraform Provider
+Terraform Provider for Cloud Conformity
 ==================
 
 - Website: https://www.terraform.io
@@ -7,16 +7,22 @@ Terraform Provider
 
 <img src="https://cdn.rawgit.com/hashicorp/terraform-website/master/content/source/assets/images/logo-hashicorp.svg" width="600px">
 
+License
+-----------
+This software is Copyright (c) 2019 Intelematics (enquiry@intelematics.com) and released under the MPL 2.0 License.
+For details about this license, please see the text of LICENSE.
+
 Maintainers
 -----------
 
-This provider plugin is maintained by the Terraform team at [HashiCorp](https://www.hashicorp.com/).
+This provider plugin is maintained by the Cloud team at [Intelematics](https://www.intelematics.com/), and the Cloud Conformity team at [Cloud Conformity](https://cloudconformity.com)
 
 Requirements
 ------------
 
--	[Terraform](https://www.terraform.io/downloads.html) 0.10.x
--	[Go](https://golang.org/doc/install) 1.11 (to build the provider plugin)
+-   [Cloud Conformity Account](https://cloudconformity.com)
+-   [Terraform](https://www.terraform.io/downloads.html) 0.10.x
+-   [Go](https://golang.org/doc/install) 1.11 (to build the provider plugin)
 
 Usage
 ---------------------
