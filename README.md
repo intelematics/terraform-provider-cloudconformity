@@ -2,8 +2,6 @@ Terraform Provider for Cloud Conformity
 ==================
 
 - Website: https://www.terraform.io
-- [![Gitter chat](https://badges.gitter.im/hashicorp-terraform/Lobby.png)](https://gitter.im/hashicorp-terraform/Lobby)
-- Mailing list: [Google Groups](http://groups.google.com/group/terraform-tool)
 
 <img src="https://cdn.rawgit.com/hashicorp/terraform-website/master/content/source/assets/images/logo-hashicorp.svg" width="600px">
 
@@ -28,26 +26,89 @@ Usage
 ---------------------
 
 ```
-# For example, restrict template version in 0.1.x
-provider "template" {
-  version = "~> 0.1"
+# Requires a Cloud Conformity API Key 
+# Generate this by logging in to CC, click your name in the top right then
+# `User Settings` -> `API Keys` -> `New API Key`
+provider "cloudconformity" {
+  api_key = var.cloudconformity_key
 }
+
+# Assumes you have Aliases set up for your AWS Accounts
+# This is recommended for readability, but otherwise can just use AWS Account name
+data "aws_iam_account_alias" "current" {
+  depends_on = [aws_iam_account_alias.alias]
+}
+
+# Retrieve CloudConformity External ID, for use in IAM trust policy
+data "cloudconformity_external_id" "it" {}
+
+# IAM Policy doc allowing CloudConformity External ID to assume a role
+data "aws_iam_policy_document" "assume" {
+  statement {
+    effect = "Allow"
+
+    principals {
+      type = "AWS"
+
+      identifiers = [
+        "arn:aws:iam::${var.cloudconformity_account_Id}:root",
+      ]
+    }
+
+    actions = [
+      "sts:AssumeRole",
+    ]
+
+    condition {
+      test     = "StringEquals"
+      variable = "sts:ExternalId"
+
+      values = [
+        data.cloudconformity_external_id.it.id,
+      ]
+    }
+  }
+}
+
+# Create the IAM Role for CloudConformity to assume, using the IAM Policy above
+resource "aws_iam_role" "cloud_conformity_role" {
+  name                 = "cloud-conformity-role"
+  assume_role_policy   = data.aws_iam_policy_document.assume.json
+}
+
+resource "aws_iam_role_policy_attachment" "cloud_conformity_role_attach" {
+  role       = aws_iam_role.cloud_conformity_role.name
+  policy_arn = "arn:aws:iam::aws:policy/ReadOnlyAccess"
+}
+
+# Create the actual CloudConformity Account
+resource "cloudconformity_account" "cloudconformity_account" {
+  name        = data.aws_iam_account_alias.current.account_alias
+  environment = "production"
+  role_arn    = aws_iam_role.cloud_conformity_role.arn
+  external_id = data.cloudconformity_external_id.it.id
+}
+
+output "account_id" {
+  value = data.aws_iam_account_alias.current.account_alias
+}
+
 ```
 
 Building The Provider
 ---------------------
 
-Clone repository to: `$GOPATH/src/github.com/terraform-providers/terraform-provider-template`
+Clone repository to: `$GOPATH/src/github.com/terraform-providers/terraform-provider-cloudconformity`
 
 ```sh
 $ mkdir -p $GOPATH/src/github.com/terraform-providers; cd $GOPATH/src/github.com/terraform-providers
-$ git clone git@github.com:terraform-providers/terraform-provider-template
+$ git clone git@github.com:terraform-providers/terraform-provider-cloudconformity
 ```
 
 Enter the provider directory and build the provider
 
 ```sh
-$ cd $GOPATH/src/github.com/terraform-providers/terraform-provider-template
+$ cd $GOPATH/src/github.com/terraform-providers/terraform-provider-cloudconformity
 $ make build
 ```
 
@@ -65,7 +126,7 @@ To compile the provider, run `make build`. This will build the provider and put 
 ```sh
 $ make build
 ...
-$ $GOPATH/bin/terraform-provider-template
+$ $GOPATH/bin/terraform-provider-cloudconformity
 ...
 ```
 
@@ -83,7 +144,7 @@ In order to run the full suite of Acceptance tests, run `make testacc`.
 $ make testacc
 ```
 
-##Go Module Upgrade
+## Go Module Upgrade
 The `go.mod` file lists all required module dependencies.  Along with `go.sum`,
 it can be removed and recreated with:
 ```
