@@ -94,7 +94,6 @@ output "account_id" {
 }
 
 ```
-test
 
 Building The Provider
 ---------------------
