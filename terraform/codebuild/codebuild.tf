@@ -1,10 +1,11 @@
 module "codebuild-terraform-provider" {
-  source                        = "git@github.com:intelematics/infrastructure-ci-cd.git//terraform/modules/codebuild"
-  github_auth_token             = var.github_auth_token
-  codebuild_project_name        = "terraform-provider-cloudconformity"
-  codebuild_project_description = "Terraform Cloud Conformity Provider"
-  github_repository             = "https://github.com/intelematics/terraform-provider-cloudconformity.git"
-  codebuild_role_name           = "terraform-provider-cloudconformity-role"
+  source                         = "git@github.com:intelematics/infrastructure-ci-cd.git//terraform/modules/codebuild?ref=feat/BE-322/slack-notif"
+  github_auth_token              = var.github_auth_token
+  codebuild_project_name         = "terraform-provider-cloudconformity"
+  codebuild_project_description  = "Terraform Cloud Conformity Provider"
+  github_repository              = "https://github.com/intelematics/terraform-provider-cloudconformity.git"
+  codebuild_role_name            = "terraform-provider-cloudconformity-role"
+  slack_notification_lambda_name = "bespinbuildstatus_codebuild_alert_slack_bot"
 }
 
 data "aws_iam_policy_document" "ecr-policy-document" {
