@@ -10,7 +10,7 @@ env:
 phases:
   install:
     commands:
-      - echo $CODEBUILD_WEBHOOK_BASE_REF
+      - echo CODEBUILD_WEBHOOK_BASE_REF:$CODEBUILD_WEBHOOK_BASE_REF
       - echo CODEBUILD_SRC_DIR - $CODEBUILD_SRC_DIR
       - echo Create dir in GOPATH for sources...
       - SOURCE=$(echo $CODEBUILD_WEBHOOK_TRIGGER | awk '{split($0,a,"/"); print a[1]}')
