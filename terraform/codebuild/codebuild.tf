@@ -1,5 +1,5 @@
 module "codebuild-terraform-provider" {
-  source                         = "git@github.com:intelematics/infrastructure-ci-cd.git//terraform/modules/codebuild?ref=feat/BE-322/slack-notif"
+  source                         = "git@github.com:intelematics/infrastructure-ci-cd.git//terraform/modules/codebuild"
   github_auth_token              = var.github_auth_token
   codebuild_project_name         = "terraform-provider-cloudconformity"
   codebuild_project_description  = "Terraform Cloud Conformity Provider"
