@@ -1,0 +1,6 @@
+steps:
+- uses: actions/checkout@master
+- uses: actions/setup-go@v1
+  with:
+    version: '1.11.12'
+- run: make
