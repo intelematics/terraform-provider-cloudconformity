@@ -5,6 +5,15 @@ Terraform Provider for Cloud Conformity
 
 <img src="https://cdn.rawgit.com/hashicorp/terraform-website/master/content/source/assets/images/logo-hashicorp.svg" width="600px">
 
+To Do
+-----------
+This repo still contains code used by Intelematics, to run TF with this
+provider:
+- Dockerfile
+- TF code to deploy CodeBuild project (CI/CD) to build docker images & push to ECR (incl. buildspec.yml)
+
+This code should be split out ASAP
+
 License
 -----------
 This software is Copyright (c) 2019 Intelematics (enquiry@intelematics.com) and released under the MPL 2.0 License.
